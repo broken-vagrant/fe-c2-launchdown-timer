@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@700&display=swap');
+:root {
+  --vw-mobile-min: 375px;
+  --vw-desktop-max: 1440px;
+
+  /* PRIMARY COLORS */
+  --color-grayish-blue: hsl(237,18%,59%);
+  --color-soft-red: hsl(345, 95%, 68%);
+
+  /* NEUTRAL COLORS */
+  --color-white: hsl(0, 0%, 100%);
+  --color-dark-desaturated-blue: hsl(236, 21%, 26%);
+  --color-dark-desaturated-blue-1: hsl(236, 14%, 22%);
+  --color-very-dark-blue: hsl(235, 16%, 14%);
+  --color-very-dark: hsl(234, 17%, 12%);
+
+  --rotor-width: 7rem;
+  --rotor-height: 12rem;
+  --digit-size: 8rem;
+  --rotor-cirlce-cut-size: 2rem;
+}
+
+html {
+
+	/* font-size: 16px; (browser default) */
+	/*  defines what 1rem is */
+	font-size: 10px;
+  font-family: 'Red Hat Text';
+}
+.main-container {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--color-very-dark) url("./images/bg-stars.svg");
+}
+.main-container .hills {
+  position: absolute;
+  height: 20%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("./images/pattern-hills.svg") no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.container {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+header {
+  margin: 8rem 0;
+  font-size: 1rem;
+  color: white;
+  letter-spacing: 1rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.rotor-group {
+  position: relative;
+  float: left;
+  margin-right: 3rem;
+}
+.rotor-group-label {
+  color: var(--color-grayish-blue);
+  font-size: 1.3rem;
+  letter-spacing: .7rem;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: -6rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.rotor-group:last-child {
+  margin-right: 0;
+}
+
+.rotor-group .rotor:first-child {
+  text-align: right;
+}
+.rotor-group .rotor:last-of-type {
+  text-align: left;
+  margin-bottom: 3rem;
+}
+.rotor {
+  font-size: var(--digit-size);
+  text-align: center;
+  position: relative;
+  width: var(--rotor-width);
+  height: var(--rotor-height);
+  float: left;
+  margin: 0px;
+  perspective: 200px;
+}
+
+.rotor:last-of-type::before,
+.rotor:first-child::before {
+  content: '';
+  z-index: 3;
+  position: absolute;
+  width: var(--rotor-cirlce-cut-size);
+  height: var(--rotor-cirlce-cut-size);
+  border-radius: 50%;
+  background-color: var(--color-very-dark);
+}
+
+.rotor:first-child::before {
+  left: 0px;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.rotor:last-of-type::before {
+  right: 0px;
+  top: 50%;
+  transform: translate(50%,-50%);
+}
+/*  
+    // Rotor classes
+    // Note that the faces which are initially visible are:
+    // - .rotor-leaf-front (top half of current rotor)
+    // - .rotor-bottom (bottom half of current rotor)
+    // Note that the faces which are initially hidden are:
+    // - .rotor-top (top half of next rotor)
+    // - .rotor-leaf-rear (bottom half of next rotor)
+*/
+.rotor-bottom ,.rotor-leaf-rear {
+  background-color: var(--color-dark-desaturated-blue);
+}
+.rotor-top,.rotor-leaf-front {
+  background-color: var(--color-dark-desaturated-blue-1);
+}
+.rotor,.rotor-top,.rotor-leaf-front,.rotor-bottom,.rotor-leaf-rear  {
+  color: var(--color-soft-red);
+  font-weight: 700;
+}
+
+.rotor-leaf {
+  z-index: 1;
+  position: absolute;
+  width: var(--rotor-width);
+  height: var(--rotor-height);
+  transform-style: preserve-3d;
+  transition: transform 0s;
+}
+
+.rotor-leaf.flipped {
+  transform: rotateX(-180deg);
+  transition: all .7s ease-in-out;
+}
+
+.rotor-leaf-front,.rotor-leaf-rear,.rotor-top,.rotor-bottom {
+  overflow: hidden;
+  position: absolute;
+  width: var(--rotor-width);
+  height: calc(var(--rotor-height) / 2);
+}
+.rotor-leaf-front,.rotor-leaf-rear {
+  margin: 0;
+  transform: rotateX(0deg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotor-leaf-front { 
+  line-height: var(--rotor-height);
+  border-radius: 4px 4px 0px 0px;
+}
+
+.rotor-top { 
+  line-height: var(--rotor-height);
+  border-radius: 4px 4px 0px 0px;
+}
+
+.rotor-leaf-rear { 
+  line-height: 0px;
+  border-radius: 0px 0px 4px 4px;
+  transform: rotateX(-180deg);
+}
+
+.rotor-bottom { 
+  bottom: 0;
+  line-height: 0px;
+  border-radius: 0px 0px 4px 4px;
+}
+
+.rotor-group .rotor:first-child .rotor-bottom {
+  border-bottom-right-radius: 0;
+}
+.rotor-group .rotor:last-of-type .rotor-bottom{
+  border-bottom-left-radius: 0;
+}
+.rotor-group .rotor:first-child .rotor-top {
+  border-top-right-radius: 0;
+}
+.rotor-group .rotor:last-of-type .rotor-top {
+  border-top-left-radius: 0;
+}
+.rotor-group .rotor:last-of-type .rotor-leaf-front{
+  border-top-left-radius: 0;
+}
+
+@media (max-width: 550px) {
+
+  .rotor-group {
+    margin-right: 2rem;
+  }
+  .rotor-group-label {
+    font-size: 1rem;
+    letter-spacing: .3rem;
+  }
+  .rotor-group:last-child {
+    margin-right: 0px;
+  }
+
+  .rotor {
+    font-size: 3rem;
+  }
+  .rotor:last-of-type::before,
+  .rotor:first-child::before {
+    width: calc(var(--rotor-cirlce-cut-size) / 2);
+    height: calc(var(--rotor-cirlce-cut-size) / 2);
+  }
+  .rotor,.rotor-leaf,.rotor-leaf-front,.rotor-leaf-rear,.rotor-top,.rotor-bottom,.rotor::after {
+    width: 3.5rem;
+  }
+
+  .rotor-leaf-front,.rotor-top {
+    line-height: 5rem;
+  }
+  .rotor-leaf,.rotor {
+    height: 5rem;
+  }
+  .rotor-leaf-front,.rotor-leaf-rear,.rotor-top,.rotor-bottom,.rotor::after {
+    height: 2.5rem;
+  }
+  header {
+    letter-spacing: .5rem;
+  }
+}
+footer {
+  position: absolute;
+  bottom: 5%;
+  width: 100%;
+}
+footer .socials {
+  display: flex;
+  justify-content: center;
+}
+.socials .icon + .icon {
+  margin-left: 2rem;
+}
+.icon {
+  width: 30px;
+  height: 30px;
+}
+.icon:hover > svg path{
+  fill: var(--color-soft-red);
+}
