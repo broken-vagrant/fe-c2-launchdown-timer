@@ -2,8 +2,13 @@
   "name": "launch-countdown-timer-main",
   "version": "1.0.0",
   "description": "Launch countdown timer",
-  "scripts": {},
+  "scripts": {
+    "deploy": "gh-pages -d build/"
+  },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "gh-pages": "^3.2.3"
+  }
 }

@@ -20,9 +20,16 @@
   --rotor-cirlce-cut-size: 2rem;
 }
 
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
+}
 html {
 
-	/* font-size: 16px; (browser default) */
+	/* font-size: 16px; (browser default, depends on user setting) */
 	/*  defines what 1rem is */
 	font-size: 10px;
   font-family: 'Red Hat Text';
@@ -57,17 +64,6 @@ header {
   text-transform: uppercase;
   text-align: center;
 }
-*,
-*::after,
-*::before {
-	margin: 0;
-	padding: 0;
-	box-sizing: inherit;
-}
-
-.hidden {
-  display: none !important;
-}
 
 .rotor-group {
   position: relative;
@@ -89,6 +85,7 @@ header {
   margin-right: 0;
 }
 
+/* move digits closer*/
 .rotor-group .rotor:first-child {
   text-align: right;
 }
@@ -96,8 +93,12 @@ header {
   text-align: left;
   margin-bottom: 3rem;
 }
+/* end move digits closer*/
+
 .rotor {
   font-size: var(--digit-size);
+  font-weight: 700;
+  color: var(--color-soft-red);
   text-align: center;
   position: relative;
   width: var(--rotor-width);
@@ -107,6 +108,7 @@ header {
   perspective: 200px;
 }
 
+/* for half circle cuts for first and last rotor in rotor-group */
 .rotor:last-of-type::before,
 .rotor:first-child::before {
   content: '';
@@ -129,25 +131,6 @@ header {
   top: 50%;
   transform: translate(50%,-50%);
 }
-/*  
-    // Rotor classes
-    // Note that the faces which are initially visible are:
-    // - .rotor-leaf-front (top half of current rotor)
-    // - .rotor-bottom (bottom half of current rotor)
-    // Note that the faces which are initially hidden are:
-    // - .rotor-top (top half of next rotor)
-    // - .rotor-leaf-rear (bottom half of next rotor)
-*/
-.rotor-bottom ,.rotor-leaf-rear {
-  background-color: var(--color-dark-desaturated-blue);
-}
-.rotor-top,.rotor-leaf-front {
-  background-color: var(--color-dark-desaturated-blue-1);
-}
-.rotor,.rotor-top,.rotor-leaf-front,.rotor-bottom,.rotor-leaf-rear  {
-  color: var(--color-soft-red);
-  font-weight: 700;
-}
 
 .rotor-leaf {
   z-index: 1;
@@ -163,6 +146,25 @@ header {
   transition: all .7s ease-in-out;
 }
 
+/*  
+    // Rotor classes
+    // Note that the faces which are initially visible are:
+    // - .rotor-leaf-front (top half of current rotor)
+    // - .rotor-bottom (bottom half of current rotor)
+    // Note that the faces which are initially hidden are:
+    // - .rotor-top (top half of next rotor)
+    // - .rotor-leaf-rear (bottom half of next rotor)
+*/
+
+/* rotor top half background */
+.rotor-top,.rotor-leaf-front {
+  background-color: var(--color-dark-desaturated-blue-1);
+}
+/* rotor bottom half background */
+.rotor-bottom ,.rotor-leaf-rear {
+  background-color: var(--color-dark-desaturated-blue);
+}
+
 .rotor-leaf-front,.rotor-leaf-rear,.rotor-top,.rotor-bottom {
   overflow: hidden;
   position: absolute;
@@ -176,42 +178,38 @@ header {
   -webkit-backface-visibility: hidden;
 }
 
-.rotor-leaf-front { 
+.rotor-leaf-front,.rotor-top { 
   line-height: var(--rotor-height);
-  border-radius: 4px 4px 0px 0px;
-}
-
-.rotor-top { 
-  line-height: var(--rotor-height);
-  border-radius: 4px 4px 0px 0px;
 }
 
 .rotor-leaf-rear { 
   line-height: 0px;
-  border-radius: 0px 0px 4px 4px;
   transform: rotateX(-180deg);
 }
 
 .rotor-bottom { 
   bottom: 0;
   line-height: 0px;
-  border-radius: 0px 0px 4px 4px;
 }
 
+/* add border-radius */ 
 .rotor-group .rotor:first-child .rotor-bottom {
-  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 4px;
 }
 .rotor-group .rotor:last-of-type .rotor-bottom{
-  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 4px;
 }
 .rotor-group .rotor:first-child .rotor-top {
-  border-top-right-radius: 0;
+  border-top-left-radius: 4px;
 }
 .rotor-group .rotor:last-of-type .rotor-top {
-  border-top-left-radius: 0;
+  border-top-right-radius: 4px;
+}
+.rotor-group .rotor:first-child .rotor-leaf-front{
+  border-top-left-radius: 4px;
 }
 .rotor-group .rotor:last-of-type .rotor-leaf-front{
-  border-top-left-radius: 0;
+  border-top-right-radius: 4px;
 }
 
 @media (max-width: 550px) {
