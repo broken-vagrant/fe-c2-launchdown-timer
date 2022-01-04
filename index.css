@@ -274,7 +274,7 @@ header {
   .rotor:last-of-type::before,
   .rotor:first-child::before {
     width: calc(var(--rotor-cirlce-cut-size) / 2);
-    height: calc(var(--rotor-cirlce-cut-size) / 2);
+    height: calc(var(--rotor-cirlce-cut-size) / 1.7);
   }
   .rotor,
   .rotor-leaf,
@@ -288,18 +288,18 @@ header {
 
   .rotor-leaf-front,
   .rotor-top {
-    line-height: calc(var(--rotor-height) / 2);
+    line-height: calc(var(--rotor-height) / 1.7);
   }
   .rotor-leaf,
   .rotor {
-    height: calc(var(--rotor-height) / 2);
+    height: calc(var(--rotor-height) / 1.7);
   }
   .rotor-leaf-front,
   .rotor-leaf-rear,
   .rotor-top,
   .rotor-bottom,
   .rotor::after {
-    height: calc(var(--rotor-height) / 4);
+    height: calc(var(--rotor-height) / 3.4);
   }
   header {
     letter-spacing: 0.5rem;
