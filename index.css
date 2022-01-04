@@ -38,6 +38,7 @@ html {
   width: 100%;
   min-height: 100vh;
   background: var(--color-very-dark) url("./images/bg-stars.svg");
+  position: relative;
 }
 .main-container .hills {
   position: absolute;
