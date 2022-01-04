@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@700&display=swap");
 :root {
   --vw-mobile-min: 375px;
+  --vw-sm: 640px;
   --vw-desktop-max: 1440px;
 
   /* PRIMARY COLORS */
-  --color-grayish-blue: hsl(237,18%,59%);
+  --color-grayish-blue: hsl(237, 18%, 59%);
   --color-soft-red: hsl(345, 95%, 68%);
 
   /* NEUTRAL COLORS */
@@ -20,12 +21,18 @@
   --rotor-cirlce-cut-size: 2rem;
 }
 
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
 html {
-
-	/* font-size: 16px; (browser default) */
-	/*  defines what 1rem is */
-	font-size: 10px;
-  font-family: 'Red Hat Text';
+  /* font-size: 16px; (browser default, depends on user setting) */
+  /*  defines what 1rem is */
+  font-size: 10px;
+  font-family: "Red Hat Text";
 }
 .main-container {
   width: 100%;
@@ -57,17 +64,6 @@ header {
   text-transform: uppercase;
   text-align: center;
 }
-*,
-*::after,
-*::before {
-	margin: 0;
-	padding: 0;
-	box-sizing: inherit;
-}
-
-.hidden {
-  display: none !important;
-}
 
 .rotor-group {
   position: relative;
@@ -77,7 +73,7 @@ header {
 .rotor-group-label {
   color: var(--color-grayish-blue);
   font-size: 1.3rem;
-  letter-spacing: .7rem;
+  letter-spacing: 0.7rem;
   text-transform: uppercase;
   position: absolute;
   bottom: -6rem;
@@ -89,6 +85,7 @@ header {
   margin-right: 0;
 }
 
+/* move digits closer*/
 .rotor-group .rotor:first-child {
   text-align: right;
 }
@@ -96,8 +93,12 @@ header {
   text-align: left;
   margin-bottom: 3rem;
 }
+/* end move digits closer*/
+
 .rotor {
   font-size: var(--digit-size);
+  font-weight: 700;
+  color: var(--color-soft-red);
   text-align: center;
   position: relative;
   width: var(--rotor-width);
@@ -107,9 +108,10 @@ header {
   perspective: 200px;
 }
 
+/* for half circle cuts for first and last rotor in rotor-group */
 .rotor:last-of-type::before,
 .rotor:first-child::before {
-  content: '';
+  content: "";
   z-index: 3;
   position: absolute;
   width: var(--rotor-cirlce-cut-size);
@@ -121,32 +123,13 @@ header {
 .rotor:first-child::before {
   left: 0px;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
 .rotor:last-of-type::before {
   right: 0px;
   top: 50%;
-  transform: translate(50%,-50%);
-}
-/*  
-    // Rotor classes
-    // Note that the faces which are initially visible are:
-    // - .rotor-leaf-front (top half of current rotor)
-    // - .rotor-bottom (bottom half of current rotor)
-    // Note that the faces which are initially hidden are:
-    // - .rotor-top (top half of next rotor)
-    // - .rotor-leaf-rear (bottom half of next rotor)
-*/
-.rotor-bottom ,.rotor-leaf-rear {
-  background-color: var(--color-dark-desaturated-blue);
-}
-.rotor-top,.rotor-leaf-front {
-  background-color: var(--color-dark-desaturated-blue-1);
-}
-.rotor,.rotor-top,.rotor-leaf-front,.rotor-bottom,.rotor-leaf-rear  {
-  color: var(--color-soft-red);
-  font-weight: 700;
+  transform: translate(50%, -50%);
 }
 
 .rotor-leaf {
@@ -160,96 +143,166 @@ header {
 
 .rotor-leaf.flipped {
   transform: rotateX(-180deg);
-  transition: all .7s ease-in-out;
+  transition: all 0.7s ease-in-out;
 }
 
-.rotor-leaf-front,.rotor-leaf-rear,.rotor-top,.rotor-bottom {
+/*  
+    // Rotor classes
+    // Note that the faces which are initially visible are:
+    // - .rotor-leaf-front (top half of current rotor)
+    // - .rotor-bottom (bottom half of current rotor)
+    // Note that the faces which are initially hidden are:
+    // - .rotor-top (top half of next rotor)
+    // - .rotor-leaf-rear (bottom half of next rotor)
+*/
+
+/* rotor top half background */
+.rotor-top,
+.rotor-leaf-front {
+  background-color: var(--color-dark-desaturated-blue-1);
+}
+/* rotor bottom half background */
+.rotor-bottom,
+.rotor-leaf-rear {
+  background-color: var(--color-dark-desaturated-blue);
+}
+
+.rotor-leaf-front,
+.rotor-leaf-rear,
+.rotor-top,
+.rotor-bottom {
   overflow: hidden;
   position: absolute;
   width: var(--rotor-width);
   height: calc(var(--rotor-height) / 2);
 }
-.rotor-leaf-front,.rotor-leaf-rear {
+.rotor-leaf-front,
+.rotor-leaf-rear {
   margin: 0;
   transform: rotateX(0deg);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
-.rotor-leaf-front { 
+.rotor-leaf-front,
+.rotor-top {
   line-height: var(--rotor-height);
-  border-radius: 4px 4px 0px 0px;
 }
 
-.rotor-top { 
-  line-height: var(--rotor-height);
-  border-radius: 4px 4px 0px 0px;
-}
-
-.rotor-leaf-rear { 
+.rotor-leaf-rear {
   line-height: 0px;
-  border-radius: 0px 0px 4px 4px;
   transform: rotateX(-180deg);
 }
 
-.rotor-bottom { 
+.rotor-bottom {
   bottom: 0;
   line-height: 0px;
-  border-radius: 0px 0px 4px 4px;
 }
 
+/* add border-radius */
 .rotor-group .rotor:first-child .rotor-bottom {
-  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 4px;
 }
-.rotor-group .rotor:last-of-type .rotor-bottom{
-  border-bottom-left-radius: 0;
+.rotor-group .rotor:last-of-type .rotor-bottom {
+  border-bottom-right-radius: 4px;
 }
 .rotor-group .rotor:first-child .rotor-top {
-  border-top-right-radius: 0;
+  border-top-left-radius: 4px;
 }
 .rotor-group .rotor:last-of-type .rotor-top {
-  border-top-left-radius: 0;
+  border-top-right-radius: 4px;
 }
-.rotor-group .rotor:last-of-type .rotor-leaf-front{
-  border-top-left-radius: 0;
+.rotor-group .rotor:first-child .rotor-leaf-front {
+  border-top-left-radius: 4px;
+}
+.rotor-group .rotor:last-of-type .rotor-leaf-front {
+  border-top-right-radius: 4px;
 }
 
-@media (max-width: 550px) {
-
+@media (max-width: 640px) {
+  .rotor-group {
+    margin-right: 2.5rem;
+  }
+  .rotor-group-label {
+    font-size: 1.5rem;
+    letter-spacing: 0.5rem;
+  }
+  .rotor {
+    font-size: calc(var(--digit-size) - 0.3 * var(--digit-size));
+  }
+  .rotor:last-of-type::before,
+  .rotor:first-child::before {
+    width: calc(var(--rotor-cirlce-cut-size) / 1.5);
+    height: calc(var(--rotor-cirlce-cut-size) / 1.5);
+  }
+  .rotor,
+  .rotor-leaf,
+  .rotor-leaf-front,
+  .rotor-leaf-rear,
+  .rotor-top,
+  .rotor-bottom,
+  .rotor::after {
+    width: calc(var(--rotor-width) - 0.3 * var(--rotor-width));
+  }
+  .rotor-leaf-front,
+  .rotor-top {
+    line-height: calc(var(--rotor-height) / 1.5);
+  }
+  .rotor-leaf,
+  .rotor {
+    height: calc(var(--rotor-height) / 1.5);
+  }
+  .rotor-leaf-front,
+  .rotor-leaf-rear,
+  .rotor-top,
+  .rotor-bottom,
+  .rotor::after {
+    height: calc(var(--rotor-height) / 1.5);
+  }
+}
+@media (max-width: 500px) {
   .rotor-group {
     margin-right: 2rem;
   }
   .rotor-group-label {
     font-size: 1rem;
-    letter-spacing: .3rem;
+    letter-spacing: 0.3rem;
   }
-  .rotor-group:last-child {
-    margin-right: 0px;
-  }
-
   .rotor {
-    font-size: 3rem;
+    font-size: calc(var(--digit-size) - 0.5 * var(--digit-size));
   }
   .rotor:last-of-type::before,
   .rotor:first-child::before {
     width: calc(var(--rotor-cirlce-cut-size) / 2);
     height: calc(var(--rotor-cirlce-cut-size) / 2);
   }
-  .rotor,.rotor-leaf,.rotor-leaf-front,.rotor-leaf-rear,.rotor-top,.rotor-bottom,.rotor::after {
-    width: 3.5rem;
+  .rotor,
+  .rotor-leaf,
+  .rotor-leaf-front,
+  .rotor-leaf-rear,
+  .rotor-top,
+  .rotor-bottom,
+  .rotor::after {
+    width: calc(var(--rotor-width) - 0.5 * var(--rotor-width));
   }
 
-  .rotor-leaf-front,.rotor-top {
-    line-height: 5rem;
+  .rotor-leaf-front,
+  .rotor-top {
+    line-height: calc(var(--rotor-height) / 2);
   }
-  .rotor-leaf,.rotor {
-    height: 5rem;
+  .rotor-leaf,
+  .rotor {
+    height: calc(var(--rotor-height) / 2);
   }
-  .rotor-leaf-front,.rotor-leaf-rear,.rotor-top,.rotor-bottom,.rotor::after {
-    height: 2.5rem;
+  .rotor-leaf-front,
+  .rotor-leaf-rear,
+  .rotor-top,
+  .rotor-bottom,
+  .rotor::after {
+    height: calc(var(--rotor-height) / 4);
   }
   header {
-    letter-spacing: .5rem;
+    letter-spacing: 0.5rem;
   }
 }
 footer {
@@ -268,6 +321,6 @@ footer .socials {
   width: 30px;
   height: 30px;
 }
-.icon:hover > svg path{
+.icon:hover > svg path {
   fill: var(--color-soft-red);
 }
